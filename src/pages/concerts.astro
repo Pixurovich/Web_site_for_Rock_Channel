@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ConcertCard from '../components/ConcertCard.astro';
+
+const upcomingConcerts = [
+  {
+    band: "Группа АРИЯ по традиции порадует всех любителей хорошей музыки специальным новогодним шоу!",
+    date: "30.12.2024, 20:00",
+    venue: "1930 Moscow",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/289",
+    imageUrl: "https://sun9-32.userapi.com/impf/c624228/v624228725/b2f0/UMbmnKq47sg.jpg?size=600x450&quality=96&sign=4c2c8a80b6c0db5383052e5bc45523c9&type=album",
+    price: "от 3500 ₽",
+    telegramPostId: "289"
+  },
+  {
+    band: "25 лет драйва и драйва! Группа 7000$ отмечают юбилей грандиозным концертом!",
+    date: "06.12.2024, 19:00",
+    venue: "MILO Concert Hall",
+    city: "Нижний Новгород",
+    ticketLink: "https://t.me/RockReplay/233",
+    imageUrl: "https://i.postimg.cc/vHZqN6Gr/7000.png",
+    price: "от 1500 ₽",
+    telegramPostId: "233"
+  },
+  {
+    band: "Группа «Нэил Шери» представит свой новый альбом «Громче!» и сыграет самые яркие композиции с предыдущих релизов.",
+    date: "01.12.2024, 19:00",
+    venue: "1930 Moscow",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/277",
+    imageUrl: "https://s8.planeta.ru/p?url=https%3A%2F%2Fs8.planeta.ru%2Fi%2F380e34%2Foriginal.jpg&width=740&height=416&crop=true&pad=false&disableAnimatedGif=true",
+    price: "от 1800 ₽",
+    telegramPostId: "277"
+  },
+  {
+    band: "Концерт группы Wildways. Каждое их выступление — это порция безумия, драйв и фирменное шоу! Со сцены вы услышите как проверенные временем хиты, так и новые треки с альбома «Сакура»",
+    date: "01.12.2024, 20:00",
+    venue: "Клуб VK Stadium",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/192",
+    imageUrl: "https://wildwaysofficial.com/wp-content/themes/twentysixteen/images/background-2024-01.jpg?ver=2",
+    price: "от 2000 ₽",
+    telegramPostId: "192"
+  },
+  {
+    band: "Операция пластелин - Танцпол ждет своих героев!",
+    date: "30.11.2024, 19:00",
+    venue: "Клуб VK Stadium",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/248?single",
+    imageUrl: "https://spb.afishagoroda.ru/storage/media/Events/41349/images_gallery/432645/65be10eab387cc42e5995053.jpg",
+    price: "от 1800 ₽",
+    telegramPostId: "248"
+  },
+  {
+    band: "Rock Privet выступит с большим концертом!",
+    date: "15.11.24 и 16.11.2024, 19:00",
+    venue: "Milo Concert Hall",
+    city: "Нижний Новгород",
+    ticketLink: "https://t.me/RockReplay/221",
+    imageUrl: "https://onrockwave.com/wp-content/uploads/2021/03/730d878e2f70bfd5eec933fddfd800ae-1024x576-1.jpg",
+    price: "от 1800 ₽",
+    telegramPostId: "221"
+  }
+];
+---
+
+<Layout 
+  title="Концерты - RockReplay" 
+  description="Расписание предстоящих рок-концертов"
+  background="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&q=80&w=2070"
+>
+  <section class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold mb-8 text-center">Афиша концертов</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {upcomingConcerts.map(concert => <ConcertCard {...concert} />)}
+    </div>
+  </section>
+</Layout>

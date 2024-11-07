@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NewsCard from '../components/NewsCard.astro';
+
+const latestNews = [
+  {
+    title: "Из As I Lay Dying ушли все, кроме вокалиста",
+    date: "03.11.2024",
+    description: 'Phil Sgrosso также сообщил, что покидает состав As I Lay Dying "Привет всем, Спасибо за ваше терпение, так как мне нужно было время, чтобы обдумать текущее состояние As I Lay Dying. Недавние события, включая уход членов группы и отмену нашего европейского тура, связанного с выходом нового альбома, продемонстрировали..."',
+    imageUrl: "https://nuskull.hu/wp-content/uploads/2024/10/philsgrosso-e1730376098453-1000x603.jpg",
+    category: "Дата",
+    telegramPostId: "272"
+  },
+  {
+    title: "24 года назад мир увидел дебютный студийный альбом американской рок-группы Linkin Park — Hybrid Theory!",
+    date: "09.10.2024",
+    description: "Этот альбом, выпущенный на лейбле Warner Bros. Records и записанный в студии NRG Recordings в Северном Голливуде, стал настоящим знаковым событием в музыкальной индустрии",
+    imageUrl: "https://i.ytimg.com/vi/LNC3YEDu8VI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDsd9qh0JP3yfu7ft_j2BTZWD4_0w",
+    category: "Дата",
+    telegramPostId: "194"
+  },
+  {
+    title: "Новая песня группы EPICA",
+    date: "27.10.2024",
+    description: "Долгое время поклонники голландской симфо-метал группы EPICA скучали по новым релизам – последний EP The Alchemy Project вышел еще в ноябре 2022 года. И вот, наконец, долгожданная новость! На днях в сети появился новый клип на трек The Ghost In Me (Danse Macabre). Этот трек стал результатом удивительного сотрудничества EPICA с Эфтелингом, вторым по посещаемости тематическим парком Европы",
+    imageUrl: "https://i.ytimg.com/vi/BWoTDpU5G9k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCTdBbGsWHynDojYy_CSbowuzp7XQ",
+    category: "Новый сингл",
+    telegramPostId: "226"
+  },
+  {
+    title: "THE FEAR представляют свой первый сингл",
+    date: "27.10.2024",
+    description: "Рады представить вам White Noise – дебютный сингл металкор-группы THE FEAR из Манчестера!",
+    category: "Новый сингл",
+    telegramPostId: "227",
+    imageUrl: "https://distortedsoundmag.com/wp-content/uploads/2024/10/The-Fear-2024.jpg"
+  },
+  {
+    title: "LEAGUE OF DISTORTION выпустили альбом и видеоклип",
+    date: "27.10.2024",
+    description: "Германская группа LEAGUE OF DISTORTION представляет свой новый альбом Galvanize",
+    category: "Новый альбом",
+    telegramPostId: "228",
+    imageUrl: "https://i.ytimg.com/vi/apBs-HPcKsg/hq720.jpg"
+  }
+];
+---
+
+<Layout 
+  title="Новости - RockReplay" 
+  description="Последние новости из мира рок-музыки"
+  background="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=2070"
+>
+  <section class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold mb-8 text-center">Новости</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {latestNews.map(news => <NewsCard {...news} />)}
+    </div>
+  </section>
+</Layout>

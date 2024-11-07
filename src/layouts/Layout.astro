@@ -1,0 +1,129 @@
+---
+import '@fontsource-variable/outfit';
+import SocialQR from '../components/SocialQR.astro';
+import Clock from '../components/Clock.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+	background?: string;
+}
+
+const { 
+	title, 
+	description = "RockReplay - лучшее из мира рок-музыки",
+	background = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=2070"
+} = Astro.props;
+
+const socialLinks = [
+	{ name: 'Telegram', url: 'https://t.me/RockReplay', icon: 'https://cdn-icons-png.flaticon.com/128/2504/2504941.png' },
+	{ name: 'VK', url: 'https://vk.com/pikhurovich91', icon: 'https://cdn-icons-png.flaticon.com/128/2504/2504953.png' },
+	{ name: 'Instagram', url: 'https://www.instagram.com/evgenii_pikhurovich/profilecard/?igsh=bndwajI1OWd0MHo0', icon: 'https://cdn-icons-png.flaticon.com/128/2111/2111463.png' },
+	{ name: 'TikTok', url: 'https://www.tiktok.com/@rockreplay?is_from_webapp=1&sender_device=pc', icon: 'https://cdn-icons-png.flaticon.com/128/2504/2504942.png' }
+];
+---
+
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen bg-dark text-white">
+		<div class="fixed inset-0 -z-10">
+			<img 
+				src={background}
+				alt="Background" 
+				class="w-full h-full object-cover"
+			/>
+			<div class="absolute inset-0 bg-gradient-to-b from-dark/85 via-dark/80 to-dark/85"></div>
+		</div>
+
+		<header class="fixed w-full bg-[#1E1E2E]/50 backdrop-blur-sm z-50 border-b border-gray-800/50">
+			<nav class="container mx-auto px-4 py-2">
+				<div class="flex items-center justify-between">
+					<div class="flex items-center gap-8">
+						<a href="/" class="text-2xl font-bold">
+							<span class="text-secondary">Rock</span>Replay
+						</a>
+						<Clock />
+					</div>
+					<div class="hidden md:flex space-x-4">
+						<a href="/" class="text-sm hover:text-secondary transition-colors">Главная страница</a>
+						<a href="/videos" class="text-sm hover:text-secondary transition-colors">Клипы</a>
+						<a href="/news" class="text-sm hover:text-secondary transition-colors">Новости</a>
+						<a href="/concerts" class="text-sm hover:text-secondary transition-colors">Концерты</a>
+						<a href="/faq" class="text-sm hover:text-secondary transition-colors">FAQ</a>
+						<a href="/contact" class="text-sm hover:text-secondary transition-colors">Отзывы и предложения</a>
+					</div>
+					<button 
+						class="md:hidden text-white" 
+						id="menu-toggle"
+						aria-label="Toggle mobile menu"
+						aria-expanded="false"
+					>
+						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16"></path>
+						</svg>
+					</button>
+				</div>
+			</nav>
+		</header>
+
+		<MobileMenu />
+
+		<main class="pt-24 relative">
+			<slot />
+		</main>
+
+		<footer class="bg-[#1E1E2E]/50 backdrop-blur-sm mt-20 py-12 relative border-t border-gray-800/50">
+			<div class="container mx-auto px-4">
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+					<div class="text-center">
+						<h3 class="text-xl font-bold mb-4">О проекте</h3>
+						<p class="text-gray-400">Привет! Мы рады приветствовать тебя на нашем сайте, посвященном каналу в Telegram, где мы внимательно следим за последними новинками тяжелой сцены. Наши подписчики всегда в курсе самых интересных, ярких и обсуждаемых видео-работ рок-групп. <br><br>Присоединяйся к нам, чтобы не пропустить ни одну волну увлекательных новостей из мира рок-музыки</p>
+					</div>
+					<div class="text-center">
+						<h3 class="text-xl font-bold mb-6">Мы в соцсетях</h3>
+						<div class="grid grid-cols-2 gap-4">
+							{socialLinks.map(social => (
+								<a
+									href={social.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="flex items-center justify-center gap-2 bg-[#2A2A3C]/50 backdrop-blur-sm hover:bg-secondary/50 p-3 rounded-lg transition-colors group"
+								>
+									<img src={social.icon} alt={social.name} class="w-5 h-5" />
+									{social.name}
+								</a>
+							))}
+						</div>
+					</div>
+					<div>
+						<SocialQR />
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		color-scheme: dark;
+	}
+	html {
+		font-family: 'Outfit Variable', system-ui, sans-serif;
+		scroll-behavior: smooth;
+	}
+	
+	::selection {
+		background-color: #FF3366;
+		color: white;
+	}
+</style>

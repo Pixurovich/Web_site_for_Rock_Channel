@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  {
+    question: "Как часто обновляется информация на сайте?",
+    answer: "Мы обновляем информацию ежедневно, публикуя самые свежие новости из мира рок-музыки."
+  },
+  {
+    question: "Как я могу предложить новость для публикации?",
+    answer: "Вы можете отправить нам новость через форму обратной связи в разделе Контакты или написать нашему боту в Telegram."
+  },
+  {
+    question: "Как купить билеты на концерт?",
+    answer: "На странице каждого концерта есть прямая ссылка на официального билетного оператора мероприятия."
+  },
+  {
+    question: "Можно ли разместить рекламу на сайте?",
+    answer: "Да, мы открыты для сотрудничества. Свяжитесь с нами через форму обратной связи для обсуждения условий."
+  }
+];
+---
+
+<Layout 
+  title="FAQ - RockNews" 
+  description="Часто задаваемые вопросы"
+  background="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=2074"
+>
+  <section class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-12 text-center">Часто задаваемые вопросы</h1>
+    
+    <div class="max-w-3xl mx-auto">
+      <div class="space-y-6">
+        {faqs.map(faq => (
+          <div class="bg-primary/50 backdrop-blur-sm rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">{faq.question}</h3>
+            <p class="text-gray-400">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/contact"
+          class="inline-block bg-secondary/80 backdrop-blur-sm text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors"
+        >
+          Форма обратной связи
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

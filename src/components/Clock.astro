@@ -1,0 +1,37 @@
+---
+---
+
+<div class="flex items-center gap-4 text-sm">
+  <div id="clock" class="text-secondary font-bold"></div>
+  <div id="date" class="text-gray-400"></div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const clockElement = document.getElementById('clock');
+  const dateElement = document.getElementById('date');
+
+  if (clockElement && dateElement) {
+    const time = now.toLocaleTimeString('ru-RU', { 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+    
+    const date = now.toLocaleDateString('ru-RU', { 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric' 
+    });
+
+    clockElement.textContent = `${time}`;
+    dateElement.textContent = `${date}`;
+  }
+}
+
+// Update clock every second
+setInterval(updateClock, 1000);
+// Initial update
+updateClock();
+</script>

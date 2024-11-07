@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  date?: string;
+  description: string;
+  telegramPostId: string;
+  imageUrl: string;
+}
+
+const { title, date, description, telegramPostId, imageUrl } = Astro.props;
+const telegramUrl = `https://t.me/RockReplay/${telegramPostId}`;
+---
+
+<article class="bg-primary/50 backdrop-blur-sm rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform">
+  <a href={telegramUrl} target="_blank" rel="noopener noreferrer">
+    <div class="relative aspect-video bg-dark">
+      <img 
+        src={imageUrl} 
+        alt={title}
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
+    <div class="p-4">
+      {date && <time class="text-sm text-gray-400">{date}</time>}
+      <h3 class="text-xl font-bold mt-2">{title}</h3>
+      <p class="text-gray-400 mt-2">{description}</p>
+    </div>
+  </a>
+</article>

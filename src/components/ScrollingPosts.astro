@@ -1,0 +1,129 @@
+---
+interface Props {
+  posts: Array<{
+    title: string;
+    description: string;
+    imageUrl: string;
+    telegramPostId: string;
+    category: string;
+    date?: string;
+  }>;
+}
+
+const { posts } = Astro.props;
+// Double the posts array for continuous scrolling
+const scrollPosts = [...posts, ...posts];
+---
+
+<div class="relative group">
+  <button 
+    id="scroll-left" 
+    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-dark/80 p-2 rounded-r-lg hover:bg-dark/90 transition-colors opacity-0 group-hover:opacity-100"
+    aria-label="Scroll left"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <div class="overflow-hidden">
+    <div id="posts-container" class="flex gap-4 transition-transform duration-300 ease-out">
+      {scrollPosts.map((post) => (
+        <a 
+          href={`https://t.me/RockReplay/${post.telegramPostId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-none w-80 bg-primary/50 backdrop-blur-sm rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform"
+        >
+          <div class="aspect-video">
+            <img 
+              src={post.imageUrl} 
+              alt={post.title}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-4">
+            <span class="inline-block bg-secondary/80 backdrop-blur-sm text-white text-sm px-2 py-1 rounded-full mb-2">
+              {post.category}
+            </span>
+            <h3 class="text-lg font-bold line-clamp-2">{post.title}</h3>
+            {post.date && <p class="text-sm text-gray-400 mt-2">{post.date}</p>}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <button 
+    id="scroll-right" 
+    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-dark/80 p-2 rounded-l-lg hover:bg-dark/90 transition-colors opacity-0 group-hover:opacity-100"
+    aria-label="Scroll right"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  let autoScrollInterval: number;
+  const container = document.getElementById('posts-container');
+  const scrollLeftBtn = document.getElementById('scroll-left');
+  const scrollRightBtn = document.getElementById('scroll-right');
+  const cardWidth = 320 + 16; // width + gap
+  const scrollSpeed = 1; // pixels per frame
+  let isScrolling = true;
+  let currentScroll = 0;
+
+  function startAutoScroll() {
+    if (!isScrolling) return;
+    
+    if (container) {
+      currentScroll += scrollSpeed;
+      const maxScroll = cardWidth * (container.children.length / 2);
+      
+      if (currentScroll >= maxScroll) {
+        currentScroll = 0;
+      }
+      
+      container.style.transform = `translateX(-${currentScroll}px)`;
+      requestAnimationFrame(startAutoScroll);
+    }
+  }
+
+  function scroll(direction: 'left' | 'right') {
+    if (!container) return;
+    
+    const scrollAmount = direction === 'right' ? cardWidth : -cardWidth;
+    currentScroll += scrollAmount;
+    
+    const maxScroll = cardWidth * (container.children.length / 2);
+    
+    if (currentScroll >= maxScroll) {
+      currentScroll = 0;
+    } else if (currentScroll < 0) {
+      currentScroll = maxScroll - cardWidth;
+    }
+    
+    container.style.transform = `translateX(-${currentScroll}px)`;
+  }
+
+  // Event listeners
+  scrollLeftBtn?.addEventListener('click', () => scroll('left'));
+  scrollRightBtn?.addEventListener('click', () => scroll('right'));
+
+  // Pause on hover
+  container?.addEventListener('mouseenter', () => {
+    isScrolling = false;
+  });
+
+  // Resume on mouse leave
+  container?.addEventListener('mouseleave', () => {
+    isScrolling = true;
+    startAutoScroll();
+  });
+
+  // Start auto-scroll
+  startAutoScroll();
+</script>

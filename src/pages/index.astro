@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ScrollingPosts from '../components/ScrollingPosts.astro';
+
+// Get latest videos
+const latestVideos = [
+  {
+    title: "The Dark - Slip Away",
+    date: "05.11.2024",
+    telegramPostId: "279",
+    imageUrl: "https://i.ytimg.com/vi/bZjGWvSZXGs/sddefault.jpg?v=67211289"
+  },
+  {
+    title: "No Cure - Dont Need Your Help",
+    date: "31.10.2024",
+    telegramPostId: "282",
+    imageUrl: "https://www.therockpit.net/wp-content/uploads/2024/11/No-Cure.jpg"
+  },
+  {
+    title: "The Halo Effect - March Of The Unheard",
+    date: "29.10.2024",
+    description: "Шведские звезды мелодичного дэт-метала The Halo Effect (https://t.me/RockReplay/207)  представили официальный видеоклип на свой новый сингл «March Of The Unheard», который является заглавным треком их второго альбома, релиз которого запланирован на 10 января 2025",
+    telegramPostId: "274",
+    imageUrl: "https://static.headbanger.ru/i/2024/10/100683.jpg"
+  },
+  {
+    title: "The Night Flight Orchestra - Shooting Velvet",
+    date: "29.10.2024",
+    description: "Шведская супергруппа The Night Flight Orchestra, в составе которой замечательные музыканты из групп Soilwork и Arch Enemy, продолжает радовать своих поклонников новыми работами!",
+    telegramPostId: "242",
+    imageUrl: "https://www.werock.bg/news/images19/the-night-flight-orchestra.jpg"
+  },
+  {
+    title: "Hollywood Undead - Hollywood Forever",
+    date: "24.10.2024",
+    description: "Свежачок от американской рок-группы из Лос-Анджелеса. Творчество коллектива базируется на смешивании рок-музыки с хип-хопом и, соответственно, в основном классифицируется как рэп-рок.",
+    telegramPostId: "220",
+    imageUrl: "https://i.ytimg.com/vi/r9gq9PDwRqQ/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGggRChyMA8=&rs=AOn4CLAos1rAJ2n1ziAhmj3GJYJghrdnMA"
+  }
+];
+
+// Get latest news
+const latestNews = [
+  {
+    title: "Из As I Lay Dying ушли все, кроме вокалиста",
+    date: "03.11.2024",
+    description: 'Phil Sgrosso также сообщил, что покидает состав As I Lay Dying "Привет всем, Спасибо за ваше терпение, так как мне нужно было время, чтобы обдумать текущее состояние As I Lay Dying. Недавние события, включая уход членов группы и отмену нашего европейского тура, связанного с выходом нового альбома, продемонстрировали..."',
+    imageUrl: "https://nuskull.hu/wp-content/uploads/2024/10/philsgrosso-e1730376098453-1000x603.jpg",
+    category: "Дата",
+    telegramPostId: "272"
+  },
+  {
+    title: "The Fear представляют свой первый сингл",
+    date: "27.10.2024",
+    description: "Рады представить вам White Noise – дебютный сингл металкор-группы The Fear из Манчестера!",
+    category: "Новый сингл",
+    telegramPostId: "227",
+    imageUrl: "https://distortedsoundmag.com/wp-content/uploads/2024/10/The-Fear-2024.jpg"
+  },
+  {
+    title: "League Of Distortion выпустили альбом и видеоклип",
+    date: "27.10.2024",
+    description: "Германская группа League Of Distortion представляет свой новый альбом Galvanize",
+    category: "Новый альбом",
+    telegramPostId: "228",
+    imageUrl: "https://i.ytimg.com/vi/apBs-HPcKsg/hq720.jpg"
+  }
+];
+
+// Get upcoming concerts
+const upcomingConcerts = [
+
+  {
+    band: "Группа АРИЯ по традиции порадует всех любителей хорошей музыки специальным новогодним шоу!",
+    date: "30.12.2024, 20:00",
+    venue: "1930 Moscow",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/289",
+    imageUrl: "https://sun1-86.userapi.com/s/v1/ig2/p7c7fBToI6LmO5AedxEcHo_OctPGd5aLDl3w48cmQHij5DQoot-ALvmJoJ73Y_NnGGioWY3ueS6u_MOpD9E7tLqM.jpg?quality=95&as=32x21,48x32,72x48,108x72,160x107,240x160,360x240,480x320,540x360,640x426,720x480,1080x720,1280x853&from=bu&u=vABzM1fXuxrW44sS63m64k_l21byZu_i9IcsY-UzQKA&cs=807x538",
+    price: "от 3500 ₽",
+    telegramPostId: "289"
+  },
+  {
+    band: "25 лет драйва и драйва! Группа 7000$ отмечают юбилей грандиозным концертом!",
+    date: "06.12.2024, 19:00",
+    venue: "MILO Concert Hall",
+    city: "Нижний Новгород",
+    ticketLink: "https://t.me/RockReplay/233",
+    imageUrl: "https://i.postimg.cc/vHZqN6Gr/7000.png",
+    price: "от 1500 ₽",
+    telegramPostId: "233"
+  },
+  {
+    band: "Концерт группы Wildways",
+    date: "01.12.2024, 20:00",
+    venue: "Клуб VK Stadium",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/192",
+    imageUrl: "https://wildwaysofficial.com/wp-content/themes/twentysixteen/images/background-2024-01.jpg?ver=2",
+    price: "от 2000 ₽",
+    telegramPostId: "192"
+  },
+  {
+    band: "Группа «Нэил Шери» представит свой новый альбом «Громче!» и сыграет самые яркие композиции с предыдущих релизов.",
+    date: "01.12.2024, 19:00",
+    venue: "1930 Moscow",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/277?single",
+    imageUrl: "https://s8.planeta.ru/p?url=https%3A%2F%2Fs8.planeta.ru%2Fi%2F380e34%2Foriginal.jpg&width=740&height=416&crop=true&pad=false&disableAnimatedGif=true",
+    price: "от 1800 ₽",
+    telegramPostId: "277"
+  },
+  {
+    band: "Операция пластелин - Танцпол ждет своих героев!",
+    date: "30.11.2024, 19:00",
+    venue: "Клуб VK Stadium",
+    city: "Москва",
+    ticketLink: "https://t.me/RockReplay/248?single",
+    imageUrl: "https://spb.afishagoroda.ru/storage/media/Events/41349/images_gallery/432645/65be10eab387cc42e5995053.jpg",
+    price: "от 1800 ₽",
+    telegramPostId: "248"
+  },
+  {
+    band: "Rock Privet выступит с большим концертом!",
+    date: "15.11.2024 и 16.11.2024, 19:00",
+    venue: "Milo Concert Hall",
+    city: "Нижний Новгород",
+    ticketLink: "https://t.me/RockReplay/221",
+    imageUrl: "https://onrockwave.com/wp-content/uploads/2021/03/730d878e2f70bfd5eec933fddfd800ae-1024x576-1.jpg",
+    price: "от 1800 ₽",
+    telegramPostId: "221"
+  },
+];
+
+// Combine all posts for the scrolling section
+const allPosts = [
+  ...latestVideos.map(video => ({
+    ...video,
+    category: 'Клип'
+  })),
+  ...latestNews,
+  ...upcomingConcerts.map(concert => ({
+    title: concert.band,
+    description: `${concert.venue}, ${concert.city}`,
+    imageUrl: concert.imageUrl,
+    telegramPostId: concert.telegramPostId,
+    category: 'Концерт',
+    date: concert.date
+  }))
+];
+---
+
+<Layout title="RockReplay - лучшее из мира рок-музыки">
+  <section class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">
+        <span class="text-secondary">Rock</span>Replay
+      </h1>
+      <p class="text-xl text-gray-400">Лучшее из мира рок-музыки</p>
+    </div>
+
+    <!-- Scrolling Posts -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-center">Недавние обновления</h2>
+      <ScrollingPosts posts={allPosts} />
+    </div>
+  </section>
+</Layout>

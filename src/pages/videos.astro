@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+
+const videoReviews = [
+  {
+    title: "The Dark - Slip Away",
+    description: "В мире музыки много групп с названием THE DARK, но одна из них выделяется особенно — это коллектив из Лос-Анджелеса, который играет в жанре металкор. И вот они вчера презентовали свой новый клип на трек Slip Away!",
+    date: "05.11.2024",
+    telegramPostId: "279",
+    imageUrl: "https://i.ytimg.com/vi/bZjGWvSZXGs/sddefault.jpg?v=67211289"
+  },
+  {
+    title: "No Cure - Dont Need Your Help",
+    description: "Знакомьтесь с группой NO CURE из Алабамы! Они появились на музыкальной сцене в 2021 году и уверенно завоевывают сердца поклонников металкора и дэт-метала.",
+    date: "31.10.2024",
+    telegramPostId: "282",
+    imageUrl: "https://www.therockpit.net/wp-content/uploads/2024/11/No-Cure.jpg"
+  },
+  {
+    title: "The Halo Effect - March Of The Unheard",
+    description: "Шведские звезды мелодичного дэт-метала The Halo Effect представили официальный видеоклип на свой новый сингл «March Of The Unheard», который является заглавным треком их второго альбома, релиз которого запланирован на 10 января 2025",
+    date: "29.10.2024",
+    telegramPostId: "274",
+    imageUrl: "https://static.headbanger.ru/i/2024/10/100683.jpg"
+  },
+  {
+    title: "The Night Flight Orchestra - Shooting Velvet",
+    description: "Шведская супергруппа The Night Flight Orchestra, в составе которой замечательные музыканты из групп Soilwork и Arch Enemy, продолжает радовать своих поклонников новыми работами!",
+    date: "29.10.2024",
+    telegramPostId: "242",
+    imageUrl: "https://www.werock.bg/news/images19/the-night-flight-orchestra.jpg"
+  },
+  {
+    title: "Balance Breach - Come Undone",
+    description: "Группа из Финляндии, была основана в 2015 году и с тех пор уверенно завоевывает сердца поклонников тяжёлой музыки.",
+    date: "28.10.2024",
+    telegramPostId: "218",
+    imageUrl: "https://www.inferno.fi/wp-content/uploads/bloodredhourglass-brhg-2021.jpg"
+  },
+  {
+    title: "Bloodywood - Nu Delhi",
+    description: "Индийская метал-группа из Нью-Дели, которая начала свою карьеру в 2016 году. Группа начала свое существование с пародий на поп-песни, на которые они делали металл-каверы и публиковали на YouTube. Позднее группа начала писать свой собственный материал, выпустив свой первый дебютный альбом в жанре фолк-метал",
+    date: "25.10.2024",
+    telegramPostId: "184",
+    imageUrl: "https://i.ytimg.com/vi/A3C9NwGKgq4/maxresdefault.jpg"
+  },
+  {
+    title: "Hollywood Undead - Hollywood Forever",
+    description: "Свежачок от американской рок-группы из Лос-Анджелеса. Творчество коллектива базируется на смешивании рок-музыки с хип-хопом и, соответственно, в основном классифицируется как рэп-рок.",
+    date: "24.10.2024",
+    telegramPostId: "220",
+    imageUrl: "https://i.ytimg.com/vi/r9gq9PDwRqQ/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGggRChyMA8=&rs=AOn4CLAos1rAJ2n1ziAhmj3GJYJghrdnMA"
+  },
+  
+  {
+    title: "ELEINE - Never Forget",
+    description: "Группа Eleine была образована в 2014 году в Швеции, быстро завоевавшая популярность благодаря своему мрачному симфоническому металлу с элементами блэк-, дэт- и трэш-метала. ",
+    date: "08.10.2024",
+    telegramPostId: "190",
+    imageUrl: "https://i.ytimg.com/vi/QpQQZYViuZM/maxresdefault.jpg"
+  }
+];
+---
+
+<Layout 
+  title="Обзоры клипов - RockNews" 
+  description="Обзоры новых рок-клипов и музыкальных видео"
+  background="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&q=80&w=2070"
+>
+  <section class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold mb-8 text-center">Обзоры клипов</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {videoReviews.map(review => <ReviewCard {...review} />)}
+    </div>
+  </section>
+</Layout>

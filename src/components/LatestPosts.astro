@@ -1,0 +1,122 @@
+---
+import type { Post } from '../utils/posts';
+import { getLatestPosts } from '../utils/posts';
+
+const latestPosts = await getLatestPosts();
+// Double the posts array for continuous scrolling
+const scrollPosts = [...latestPosts, ...latestPosts];
+---
+
+<div class="relative">
+  <button 
+    id="scroll-left" 
+    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-dark/80 p-2 rounded-r-lg hover:bg-dark/90 transition-colors"
+    aria-label="Scroll left"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <div class="overflow-hidden">
+    <div id="posts-container" class="flex gap-4 transition-transform duration-300 ease-out">
+      {scrollPosts.map((post) => (
+        <a 
+          href={`https://t.me/RockReplay/${post.telegramPostId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-none w-80 bg-primary rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform"
+        >
+          <div class="aspect-video">
+            <img 
+              src={post.imageUrl} 
+              alt={post.title}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-4">
+            <span class="inline-block bg-secondary text-white text-sm px-2 py-1 rounded-full mb-2">
+              {post.category}
+            </span>
+            <h3 class="text-lg font-bold">{post.title}</h3>
+            {post.date && <p class="text-sm text-gray-400 mt-2">{post.date}</p>}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <button 
+    id="scroll-right" 
+    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-dark/80 p-2 rounded-l-lg hover:bg-dark/90 transition-colors"
+    aria-label="Scroll right"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  const container = document.getElementById('posts-container');
+  const scrollLeftBtn = document.getElementById('scroll-left');
+  const scrollRightBtn = document.getElementById('scroll-right');
+  const cardWidth = 320 + 16; // width + gap
+  const totalPosts = 8; // Updated to match the number of unique posts
+
+  if (container && scrollLeftBtn && scrollRightBtn) {
+    let currentScroll = 0;
+    const maxScroll = cardWidth * totalPosts;
+
+    const scroll = (direction: 'left' | 'right') => {
+      if (direction === 'right') {
+        currentScroll += cardWidth;
+        if (currentScroll >= maxScroll) {
+          currentScroll = 0;
+          container.style.transition = 'none';
+          container.style.transform = `translateX(0)`;
+          // Force reflow
+          container.offsetHeight;
+          container.style.transition = 'transform 300ms ease-out';
+        }
+      } else {
+        currentScroll -= cardWidth;
+        if (currentScroll < 0) {
+          currentScroll = maxScroll - cardWidth;
+          container.style.transition = 'none';
+          container.style.transform = `translateX(-${currentScroll}px)`;
+          // Force reflow
+          container.offsetHeight;
+          container.style.transition = 'transform 300ms ease-out';
+        }
+      }
+      container.style.transform = `translateX(-${currentScroll}px)`;
+    };
+
+    scrollLeftBtn.addEventListener('click', () => scroll('left'));
+    scrollRightBtn.addEventListener('click', () => scroll('right'));
+
+    // Auto-scroll
+    const autoScrollInterval = setInterval(() => {
+      scroll('right');
+    }, 5000);
+
+    // Pause auto-scroll on hover
+    container.addEventListener('mouseenter', () => {
+      clearInterval(autoScrollInterval);
+    });
+
+    // Resume auto-scroll when mouse leaves
+    container.addEventListener('mouseleave', () => {
+      setInterval(() => {
+        scroll('right');
+      }, 5000);
+    });
+
+    // Cleanup interval on page unload
+    window.addEventListener('unload', () => {
+      clearInterval(autoScrollInterval);
+    });
+  }
+</script>

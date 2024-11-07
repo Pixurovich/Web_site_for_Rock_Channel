@@ -1,0 +1,68 @@
+---
+---
+
+<div 
+  id="mobile-menu" 
+  class="fixed inset-0 bg-dark/95 z-50 transform translate-x-full transition-transform duration-300 md:hidden"
+  aria-hidden="true"
+>
+  <div class="container mx-auto px-4 py-8">
+    <button 
+      id="close-menu" 
+      class="absolute top-4 right-4 text-white"
+      aria-label="Close menu"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    
+    <nav class="flex flex-col space-y-6 text-center text-xl mt-12">
+      <a href="/" class="hover:text-secondary transition-colors">Главная страница</a>
+      <a href="/videos" class="hover:text-secondary transition-colors">Клипы</a>
+      <a href="/news" class="hover:text-secondary transition-colors">Новости</a>
+      <a href="/concerts" class="hover:text-secondary transition-colors">Концерты</a>
+      <a href="/faq" class="hover:text-secondary transition-colors">FAQ</a>
+      <a href="/contact" class="hover:text-secondary transition-colors">Отзывы и предложения</a>
+    </nav>
+  </div>
+</div>
+
+<script>
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuToggle = document.getElementById('menu-toggle');
+  const closeMenu = document.getElementById('close-menu');
+
+  function toggleMenu(show: boolean) {
+    if (mobileMenu) {
+      if (show) {
+        mobileMenu.classList.remove('translate-x-full');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.add('translate-x-full');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+    
+    if (menuToggle) {
+      menuToggle.setAttribute('aria-expanded', show ? 'true' : 'false');
+    }
+  }
+
+  menuToggle?.addEventListener('click', () => toggleMenu(true));
+  closeMenu?.addEventListener('click', () => toggleMenu(false));
+
+  // Close menu when clicking on a link
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => toggleMenu(false));
+  });
+
+  // Close menu when pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      toggleMenu(false);
+    }
+  });
+</script>

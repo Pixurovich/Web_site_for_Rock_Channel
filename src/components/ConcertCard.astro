@@ -1,0 +1,47 @@
+---
+interface Props {
+  band: string;
+  date: string;
+  venue: string;
+  city: string;
+  ticketLink: string;
+  price: string;
+  telegramPostId: string;
+  imageUrl: string;
+}
+
+const { band, date, venue, city, ticketLink, price, telegramPostId, imageUrl } = Astro.props;
+const telegramUrl = `https://t.me/RockReplay/${telegramPostId}`;
+---
+
+<article class="bg-primary/50 backdrop-blur-sm rounded-lg overflow-hidden">
+  <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="block">
+    <div class="relative aspect-video bg-dark">
+      <img 
+        src={imageUrl} 
+        alt={`${band} концерт`}
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
+    <div class="p-4">
+      <h3 class="text-xl font-bold mb-2">{band}</h3>
+      <div class="space-y-2 text-gray-400 mb-4">
+        <p>{date}</p>
+        <p>{venue}</p>
+        <p>{city}</p>
+        <p class="text-secondary font-bold">{price}</p>
+      </div>
+    </div>
+  </a>
+  <div class="px-4 pb-4">
+    <a
+      href={ticketLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full bg-secondary text-white text-center py-2 rounded-lg hover:bg-opacity-90 transition-colors"
+    >
+      Купить билет
+    </a>
+  </div>
+</article>
