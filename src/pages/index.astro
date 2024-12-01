@@ -8,14 +8,12 @@ const latestVideos = [
     title: "Eisbrecher - Everything is wunderbar",
     date: "30.11.2024",
     telegramPostId: "370",
-    category: "Новый сингл"
     imageUrl: "https://rockmetalmag.fr/wp-content/uploads/2024/11/eisbrecher-everything-is-wunderb.jpg"
   },
   {
     title: "Blacktoothed - Antidote",
     date: "29.11.2024",
     telegramPostId: "373",
-    category: "Новый сингл"
     imageUrl: "https://arising-empire.com/cms/uploads/news_blacktoothed-released-brand-new-single-antidote_895.jpg"
   },
   {
@@ -102,7 +100,7 @@ const upcomingConcerts = [
 const allPosts = [
   ...latestVideos.map(video => ({
     ...video,
-    category: 'Клип'
+    category: 'Новый сингл'
   })),
   ...latestNews,
   ...upcomingConcerts.map(concert => ({
