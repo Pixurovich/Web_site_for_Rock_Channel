@@ -5,24 +5,32 @@ import ScrollingPosts from '../components/ScrollingPosts.astro';
 // Get latest videos
 const latestVideos = [
   {
-    title: "Eisbrecher - Everything is wunderbar",
-    date: "30.11.2024",
-    telegramPostId: "370",
-    imageUrl: "https://rockmetalmag.fr/wp-content/uploads/2024/11/eisbrecher-everything-is-wunderb.jpg"
-  },
-  {
-    title: "Blacktoothed - Antidote",
-    date: "29.11.2024",
-    telegramPostId: "373",
-    imageUrl: "https://arising-empire.com/cms/uploads/news_blacktoothed-released-brand-new-single-antidote_895.jpg"
-  },
-  {
-    title: "Новый сингл Dynazty - Game of Faces",
-    description: 'Сингл из будущего альбома "Game Of Faces", релиз которого состоится 14 февраля 2025 года',
-    date: "28.11.2024",
-    telegramPostId: "367",
+    title: "Our Mirage - Fractured",
+    date: "05.12.2024",
+    telegramPostId: "389",
     category: "Новый сингл"
-    imageUrl: "https://www.metallerium.com/img/dynazty-presentan-sencillo-principal-de-nuevo-album-game-of-faces-1306.jpg"
+    imageUrl: "https://sun9-74.userapi.com/s/v1/ig2/WeqWTT3t0pXLeYnbS__wFRjh01rDD_c_GtaNWMkPjKm4k4kPGx8Pk49zZuFnap0g4mp98IpRxobZYHqildMf8IZC.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1400x1400&from=bu&u=pTrcp6O-4-wiT2cAL6tobvAmXTI5cAg8rPxglMeDSR0&cs=807x807"
+  },
+  {
+    title: "Stray View - Wasteland",
+    date: "05.12.2024",
+    telegramPostId: "388",
+    category: "Новый сингл"
+    imageUrl: "https://lastfm.freetls.fastly.net/i/u/300x300/045609162f678e88b57424a7512abb4a.jpg"
+  },
+  {
+    title: "Arch Enemy - Blood Dynasty",
+    date: "05.12.2024",
+    telegramPostId: "387",
+    category: "Новый сингл"
+    imageUrl: "https://www.archenemy.net/images/com_droppics/70/large/ArchEnemyBloodDynasty---Kopie-2.jpg?1727900506804"
+  },
+  {
+    title: "Avantasia - Creepshow",
+    date: "05.12.2024",
+    telegramPostId: "386",
+    category: "Новый сингл"
+    imageUrl: "https://i.scdn.co/image/ab67616d0000b273f3a8a5d252397c7dbb2890f9"
   }
 ];
 
@@ -100,7 +108,7 @@ const upcomingConcerts = [
 const allPosts = [
   ...latestVideos.map(video => ({
     ...video,
-    category: 'Новый сингл'
+    category: 'Клип'
   })),
   ...latestNews,
   ...upcomingConcerts.map(concert => ({
