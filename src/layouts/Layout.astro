@@ -3,7 +3,6 @@ import '@fontsource-variable/outfit';
 import SocialQR from '../components/SocialQR.astro';
 import Clock from '../components/Clock.astro';
 import MobileMenu from '../components/MobileMenu.astro';
-import MusicPlayer from '../components/MusicPlayer.astro';
 
 interface Props {
 	title: string;
@@ -78,7 +77,7 @@ const socialLinks = [
 
 		<MobileMenu />
 
-		<main class="pt-24 relative pb-20">
+		<main class="pt-24 relative">
 			<slot />
 		</main>
 
@@ -111,8 +110,6 @@ const socialLinks = [
 				</div>
 			</div>
 		</footer>
-
-		<MusicPlayer />
 	</body>
 </html>
 
