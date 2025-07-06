@@ -1,0 +1,555 @@
+---
+---
+
+<div id="music-player" class="fixed bottom-0 left-0 right-0 bg-dark/95 backdrop-blur-sm border-t border-gray-800/50 z-40 transform translate-y-full transition-transform duration-300">
+  <!-- Player Header -->
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="text-lg font-bold text-white">🎵 RockReplay Player</h3>
+      <div class="flex items-center gap-2">
+        <button id="genre-selector" class="bg-secondary/80 text-white px-3 py-1 rounded-lg hover:bg-secondary transition-colors text-sm">
+          🎸 Выбрать жанр
+        </button>
+        <button id="favorites-btn" class="bg-primary/80 text-white px-3 py-1 rounded-lg hover:bg-primary transition-colors text-sm">
+          ❤️ Избранное
+        </button>
+        <button id="close-player" class="text-gray-400 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Current Track Info -->
+    <div class="flex items-center gap-4 mb-3">
+      <div id="current-track-cover" class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
+        🎵
+      </div>
+      <div class="flex-1">
+        <div id="current-track-title" class="text-white font-medium">Выберите трек для воспроизведения</div>
+        <div id="current-track-artist" class="text-gray-400 text-sm">RockReplay</div>
+      </div>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="flex items-center gap-4 mb-3">
+      <button id="prev-btn" class="text-white hover:text-secondary transition-colors">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+        </svg>
+      </button>
+      <button id="play-pause-btn" class="bg-secondary text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-secondary/80 transition-colors">
+        <svg id="play-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg id="pause-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+      <button id="next-btn" class="text-white hover:text-secondary transition-colors">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+        </svg>
+      </button>
+      <div class="flex-1 mx-4">
+        <div class="flex items-center gap-2 text-sm text-gray-400">
+          <span id="current-time">0:00</span>
+          <div class="flex-1 bg-gray-700 h-1 rounded-full">
+            <div id="progress-bar" class="bg-secondary h-1 rounded-full w-0 transition-all"></div>
+          </div>
+          <span id="duration">0:00</span>
+        </div>
+      </div>
+      <button id="volume-btn" class="text-white hover:text-secondary transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Playlist -->
+    <div id="playlist-container" class="max-h-48 overflow-y-auto bg-primary/30 rounded-lg p-3">
+      <div id="playlist-header" class="text-white font-medium mb-2">Выберите жанр</div>
+      <div id="playlist-tracks" class="space-y-2">
+        <div class="text-gray-400 text-center py-4">Выберите жанр для загрузки плейлиста</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Genre Selection Modal -->
+<div id="genre-modal" class="fixed inset-0 bg-dark/90 z-50 hidden flex items-center justify-center">
+  <div class="bg-primary/90 backdrop-blur-sm rounded-lg p-6 max-w-md w-full mx-4">
+    <h3 class="text-xl font-bold text-white mb-4">🎸 Выберите жанр</h3>
+    <div class="grid grid-cols-2 gap-3">
+      <button class="genre-btn bg-secondary/20 hover:bg-secondary/40 text-white p-3 rounded-lg transition-colors" data-genre="heavy-metal">
+        🤘 Heavy Metal
+      </button>
+      <button class="genre-btn bg-secondary/20 hover:bg-secondary/40 text-white p-3 rounded-lg transition-colors" data-genre="hard-rock">
+        🎸 Hard Rock
+      </button>
+      <button class="genre-btn bg-secondary/20 hover:bg-secondary/40 text-white p-3 rounded-lg transition-colors" data-genre="alternative">
+        🎵 Alternative
+      </button>
+      <button class="genre-btn bg-secondary/20 hover:bg-secondary/40 text-white p-3 rounded-lg transition-colors" data-genre="progressive">
+        🌀 Progressive
+      </button>
+      <button class="genre-btn bg-secondary/20 hover:bg-secondary/40 text-white p-3 rounded-lg transition-colors" data-genre="symphonic">
+        🎼 Symphonic
+      </button>
+      <button class="genre-btn bg-secondary/20 hover:bg-secondary/40 text-white p-3 rounded-lg transition-colors" data-genre="metalcore">
+        ⚡ Metalcore
+      </button>
+    </div>
+    <button id="close-genre-modal" class="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-500 transition-colors">
+      Закрыть
+    </button>
+  </div>
+</div>
+
+<!-- Audio Element -->
+<audio id="audio-player" preload="metadata"></audio>
+
+<!-- Player Toggle Button -->
+<button id="player-toggle" class="fixed bottom-4 right-4 bg-secondary text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-secondary/80 transition-colors z-30 shadow-lg">
+  🎵
+</button>
+
+<script>
+// Music data organized by genres
+const musicData = {
+  'heavy-metal': [
+    {
+      id: 1,
+      title: 'Master of Puppets',
+      artist: 'Metallica',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+      cover: '🤘'
+    },
+    {
+      id: 2,
+      title: 'Holy Diver',
+      artist: 'Dio',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+      cover: '⚡'
+    },
+    {
+      id: 3,
+      title: 'Breaking the Law',
+      artist: 'Judas Priest',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+      cover: '🔥'
+    }
+  ],
+  'hard-rock': [
+    {
+      id: 4,
+      title: 'Back in Black',
+      artist: 'AC/DC',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+      cover: '🎸'
+    },
+    {
+      id: 5,
+      title: 'Sweet Child O Mine',
+      artist: 'Guns N Roses',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+      cover: '🌹'
+    },
+    {
+      id: 6,
+      title: 'Smoke on the Water',
+      artist: 'Deep Purple',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+      cover: '💜'
+    }
+  ],
+  'alternative': [
+    {
+      id: 7,
+      title: 'Smells Like Teen Spirit',
+      artist: 'Nirvana',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+      cover: '🎭'
+    },
+    {
+      id: 8,
+      title: 'Creep',
+      artist: 'Radiohead',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+      cover: '🌙'
+    },
+    {
+      id: 9,
+      title: 'Black',
+      artist: 'Pearl Jam',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+      cover: '🖤'
+    }
+  ],
+  'progressive': [
+    {
+      id: 10,
+      title: 'Tom Sawyer',
+      artist: 'Rush',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
+      cover: '🌀'
+    },
+    {
+      id: 11,
+      title: 'Schism',
+      artist: 'Tool',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
+      cover: '🔧'
+    },
+    {
+      id: 12,
+      title: 'Pull Me Under',
+      artist: 'Dream Theater',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
+      cover: '🎹'
+    }
+  ],
+  'symphonic': [
+    {
+      id: 13,
+      title: 'Nemo',
+      artist: 'Nightwish',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3',
+      cover: '🎼'
+    },
+    {
+      id: 14,
+      title: 'Storm the Sorrow',
+      artist: 'Epica',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
+      cover: '⛈️'
+    },
+    {
+      id: 15,
+      title: 'Angels',
+      artist: 'Within Temptation',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
+      cover: '👼'
+    }
+  ],
+  'metalcore': [
+    {
+      id: 16,
+      title: 'My Curse',
+      artist: 'Killswitch Engage',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3',
+      cover: '⚡'
+    },
+    {
+      id: 17,
+      title: 'Tears Don\'t Fall',
+      artist: 'Bullet for My Valentine',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3',
+      cover: '💧'
+    },
+    {
+      id: 18,
+      title: 'Unholy Confessions',
+      artist: 'Avenged Sevenfold',
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3',
+      cover: '💀'
+    }
+  ]
+};
+
+// Player state
+let currentPlaylist = [];
+let currentTrackIndex = 0;
+let isPlaying = false;
+let favorites = JSON.parse(localStorage.getItem('rockReplayFavorites') || '[]');
+let currentGenre = '';
+
+// DOM elements
+const musicPlayer = document.getElementById('music-player');
+const playerToggle = document.getElementById('player-toggle');
+const closePlayer = document.getElementById('close-player');
+const genreSelector = document.getElementById('genre-selector');
+const favoritesBtn = document.getElementById('favorites-btn');
+const genreModal = document.getElementById('genre-modal');
+const closeGenreModal = document.getElementById('close-genre-modal');
+const audioPlayer = document.getElementById('audio-player');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playIcon = document.getElementById('play-icon');
+const pauseIcon = document.getElementById('pause-icon');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const currentTrackTitle = document.getElementById('current-track-title');
+const currentTrackArtist = document.getElementById('current-track-artist');
+const currentTrackCover = document.getElementById('current-track-cover');
+const playlistHeader = document.getElementById('playlist-header');
+const playlistTracks = document.getElementById('playlist-tracks');
+const progressBar = document.getElementById('progress-bar');
+const currentTime = document.getElementById('current-time');
+const duration = document.getElementById('duration');
+
+// Initialize player
+function initPlayer() {
+  // Show/hide player
+  playerToggle?.addEventListener('click', () => {
+    musicPlayer?.classList.toggle('translate-y-full');
+  });
+
+  closePlayer?.addEventListener('click', () => {
+    musicPlayer?.classList.add('translate-y-full');
+  });
+
+  // Genre selection
+  genreSelector?.addEventListener('click', () => {
+    genreModal?.classList.remove('hidden');
+  });
+
+  closeGenreModal?.addEventListener('click', () => {
+    genreModal?.classList.add('hidden');
+  });
+
+  // Genre buttons
+  document.querySelectorAll('.genre-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const genre = btn.dataset.genre;
+      loadGenre(genre);
+      genreModal?.classList.add('hidden');
+    });
+  });
+
+  // Favorites button
+  favoritesBtn?.addEventListener('click', () => {
+    loadFavorites();
+  });
+
+  // Audio controls
+  playPauseBtn?.addEventListener('click', togglePlayPause);
+  prevBtn?.addEventListener('click', previousTrack);
+  nextBtn?.addEventListener('click', nextTrack);
+
+  // Audio events
+  audioPlayer?.addEventListener('loadedmetadata', updateDuration);
+  audioPlayer?.addEventListener('timeupdate', updateProgress);
+  audioPlayer?.addEventListener('ended', nextTrack);
+
+  // Load favorites on init
+  if (favorites.length > 0) {
+    loadFavorites();
+  }
+}
+
+function loadGenre(genre) {
+  currentGenre = genre;
+  currentPlaylist = [...musicData[genre]];
+  currentTrackIndex = 0;
+  renderPlaylist();
+  playlistHeader.textContent = `🎸 ${getGenreName(genre)}`;
+}
+
+function loadFavorites() {
+  currentGenre = 'favorites';
+  currentPlaylist = [...favorites];
+  currentTrackIndex = 0;
+  renderPlaylist();
+  playlistHeader.textContent = '❤️ Избранное';
+}
+
+function getGenreName(genre) {
+  const names = {
+    'heavy-metal': 'Heavy Metal',
+    'hard-rock': 'Hard Rock',
+    'alternative': 'Alternative',
+    'progressive': 'Progressive',
+    'symphonic': 'Symphonic',
+    'metalcore': 'Metalcore'
+  };
+  return names[genre] || genre;
+}
+
+function renderPlaylist() {
+  if (!playlistTracks) return;
+  
+  if (currentPlaylist.length === 0) {
+    playlistTracks.innerHTML = '<div class="text-gray-400 text-center py-4">Плейлист пуст</div>';
+    return;
+  }
+
+  playlistTracks.innerHTML = currentPlaylist.map((track, index) => {
+    const isFavorite = favorites.some(fav => fav.id === track.id);
+    const isCurrentTrack = index === currentTrackIndex;
+    
+    return `
+      <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-primary/50 transition-colors ${isCurrentTrack ? 'bg-secondary/20' : ''}">
+        <button class="track-btn flex-1 flex items-center gap-3 text-left" data-index="${index}">
+          <div class="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-sm">
+            ${track.cover}
+          </div>
+          <div class="flex-1">
+            <div class="text-white text-sm font-medium">${track.title}</div>
+            <div class="text-gray-400 text-xs">${track.artist}</div>
+          </div>
+        </button>
+        <button class="favorite-btn text-lg hover:scale-110 transition-transform" data-track-id="${track.id}">
+          ${isFavorite ? '❤️' : '🤍'}
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  // Add event listeners
+  document.querySelectorAll('.track-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = parseInt(btn.dataset.index);
+      playTrack(index);
+    });
+  });
+
+  document.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const trackId = parseInt(btn.dataset.trackId);
+      toggleFavorite(trackId);
+    });
+  });
+}
+
+function playTrack(index) {
+  if (!currentPlaylist[index]) return;
+  
+  currentTrackIndex = index;
+  const track = currentPlaylist[index];
+  
+  audioPlayer.src = track.url;
+  audioPlayer.load();
+  
+  currentTrackTitle.textContent = track.title;
+  currentTrackArtist.textContent = track.artist;
+  currentTrackCover.textContent = track.cover;
+  
+  audioPlayer.play().then(() => {
+    isPlaying = true;
+    updatePlayPauseButton();
+    renderPlaylist(); // Re-render to highlight current track
+  }).catch(console.error);
+}
+
+function togglePlayPause() {
+  if (isPlaying) {
+    audioPlayer.pause();
+    isPlaying = false;
+  } else {
+    if (audioPlayer.src) {
+      audioPlayer.play().then(() => {
+        isPlaying = true;
+      }).catch(console.error);
+    } else if (currentPlaylist.length > 0) {
+      playTrack(0);
+    }
+  }
+  updatePlayPauseButton();
+}
+
+function updatePlayPauseButton() {
+  if (isPlaying) {
+    playIcon?.classList.add('hidden');
+    pauseIcon?.classList.remove('hidden');
+  } else {
+    playIcon?.classList.remove('hidden');
+    pauseIcon?.classList.add('hidden');
+  }
+}
+
+function previousTrack() {
+  if (currentPlaylist.length === 0) return;
+  currentTrackIndex = currentTrackIndex > 0 ? currentTrackIndex - 1 : currentPlaylist.length - 1;
+  playTrack(currentTrackIndex);
+}
+
+function nextTrack() {
+  if (currentPlaylist.length === 0) return;
+  currentTrackIndex = currentTrackIndex < currentPlaylist.length - 1 ? currentTrackIndex + 1 : 0;
+  playTrack(currentTrackIndex);
+}
+
+function toggleFavorite(trackId) {
+  const track = currentPlaylist.find(t => t.id === trackId) || 
+                Object.values(musicData).flat().find(t => t.id === trackId);
+  
+  if (!track) return;
+
+  const favoriteIndex = favorites.findIndex(fav => fav.id === trackId);
+  
+  if (favoriteIndex > -1) {
+    // Remove from favorites
+    favorites.splice(favoriteIndex, 1);
+    
+    // If we're viewing favorites and removed a track, update the playlist
+    if (currentGenre === 'favorites') {
+      currentPlaylist = [...favorites];
+      if (currentTrackIndex >= currentPlaylist.length) {
+        currentTrackIndex = Math.max(0, currentPlaylist.length - 1);
+      }
+    }
+  } else {
+    // Add to favorites
+    favorites.push(track);
+  }
+  
+  // Save to localStorage
+  localStorage.setItem('rockReplayFavorites', JSON.stringify(favorites));
+  
+  // Re-render playlist
+  renderPlaylist();
+}
+
+function updateDuration() {
+  if (audioPlayer.duration) {
+    duration.textContent = formatTime(audioPlayer.duration);
+  }
+}
+
+function updateProgress() {
+  if (audioPlayer.duration) {
+    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    progressBar.style.width = `${progress}%`;
+    currentTime.textContent = formatTime(audioPlayer.currentTime);
+  }
+}
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initPlayer);
+</script>
+
+<style>
+#music-player {
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.track-btn:hover {
+  background-color: rgba(255, 51, 102, 0.1);
+}
+
+#playlist-tracks::-webkit-scrollbar {
+  width: 6px;
+}
+
+#playlist-tracks::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+#playlist-tracks::-webkit-scrollbar-thumb {
+  background: #FF3366;
+  border-radius: 3px;
+}
+
+#playlist-tracks::-webkit-scrollbar-thumb:hover {
+  background: #FF1144;
+}
+</style>
