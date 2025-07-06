@@ -111,8 +111,8 @@
 <!-- Audio Element -->
 <audio id="audio-player" preload="metadata"></audio>
 
-<!-- Enhanced Mini Player Button -->
-<div id="mini-player" class="fixed bottom-4 right-4 z-30">
+<!-- Enhanced Mini Player Button - Positioned in Top Left -->
+<div id="mini-player" class="fixed top-20 left-4 z-30">
   <!-- Collapsed State -->
   <div id="mini-player-collapsed" class="bg-dark/95 backdrop-blur-sm border border-gray-700 rounded-xl p-3 shadow-2xl transition-all duration-300 hover:scale-105">
     <div class="flex items-center gap-3">
@@ -140,7 +140,7 @@
         
         <button id="mini-expand" class="text-gray-400 hover:text-white transition-colors p-1">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
           </svg>
         </button>
       </div>
@@ -596,12 +596,12 @@ document.addEventListener('DOMContentLoaded', initPlayer);
 }
 
 #mini-player {
-  animation: slideInUp 0.5s ease-out;
+  animation: slideInDown 0.5s ease-out;
 }
 
-@keyframes slideInUp {
+@keyframes slideInDown {
   from {
-    transform: translateY(100px);
+    transform: translateY(-100px);
     opacity: 0;
   }
   to {
@@ -654,6 +654,21 @@ document.addEventListener('DOMContentLoaded', initPlayer);
   
   #mini-artist {
     max-width: 120px;
+  }
+}
+
+/* Ensure mini player doesn't interfere with navigation */
+@media (max-width: 768px) {
+  #mini-player {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+  
+  #mini-player-collapsed {
+    min-width: auto;
+    max-width: none;
   }
 }
 </style>
