@@ -14,7 +14,7 @@ const { band, date, venue, city, ticketLink, price, telegramPostId, imageUrl } =
 const telegramUrl = `https://t.me/RockReplay/${telegramPostId}`;
 ---
 
-<article class="bg-primary/50 backdrop-blur-sm rounded-lg overflow-hidden">
+<article class="bg-primary/50 backdrop-blur-sm rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform">
   <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="block">
     <div class="relative aspect-video bg-dark">
       <img 
@@ -25,12 +25,12 @@ const telegramUrl = `https://t.me/RockReplay/${telegramPostId}`;
       />
     </div>
     <div class="p-4">
-      <h3 class="text-xl font-bold mb-2">{band}</h3>
+      <h3 class="text-xl font-bold mb-2 text-white">{band}</h3>
       <div class="space-y-2 text-gray-400 mb-4">
-        <p>{date}</p>
-        <p>{venue}</p>
-        <p>{city}</p>
-        <p class="text-secondary font-bold">{price}</p>
+        <p class="text-sm">📅 {date}</p>
+        <p class="text-sm">🏛️ {venue}</p>
+        <p class="text-sm">📍 {city}</p>
+        <p class="text-secondary font-bold text-lg">💰 {price}</p>
       </div>
     </div>
   </a>
@@ -39,9 +39,9 @@ const telegramUrl = `https://t.me/RockReplay/${telegramPostId}`;
       href={ticketLink}
       target="_blank"
       rel="noopener noreferrer"
-      class="block w-full bg-secondary text-white text-center py-2 rounded-lg hover:bg-opacity-90 transition-colors"
+      class="block w-full bg-secondary text-white text-center py-3 rounded-lg hover:bg-opacity-90 transition-colors font-medium"
     >
-      Купить билет
+      🎫 Купить билет
     </a>
   </div>
 </article>
