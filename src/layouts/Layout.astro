@@ -76,9 +76,14 @@ const socialLinks = [
 			</nav>
 		</header>
 
+		<!-- Music Player positioned under header -->
+		<div class="fixed top-16 left-0 right-0 z-40">
+			<MusicPlayer />
+		</div>
+
 		<MobileMenu />
 
-		<main class="pt-24 relative pb-20">
+		<main class="pt-32 relative pb-20">
 			<slot />
 		</main>
 
@@ -111,8 +116,6 @@ const socialLinks = [
 				</div>
 			</div>
 		</footer>
-
-		<MusicPlayer />
 	</body>
 </html>
 
